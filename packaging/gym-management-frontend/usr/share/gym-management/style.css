@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #222;
+}
+
+
+header {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #222;
+    color: white;
+}
+
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+
+section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+section h2 {
+    margin-top: 0;
+}
+
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+
+input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+}
+
+
+button:hover {
+    opacity: 0.85;
+}
+
+
+#members-list,
+#courses-list,
+#registrations-list,
+#payments-list {
+    margin-top: 15px;
+}
+
+
+.item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    border-left: 4px solid #333;
+    border-radius: 4px;
+}
+
+
+.error {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #ffe5e5;
+    border-radius: 5px;
+}
+
+
+.success {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #e5ffe5;
+    border-radius: 5px;
+}
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #222;
+    color: white;
+    margin-top: 40px;
+}
+
+
+@media (max-width: 600px) {
+
+    main {
+        width: 95%;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+    }
+}
