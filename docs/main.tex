@@ -131,57 +131,112 @@ The following technologies are used in the project:
 
 \section{Database Design}
 
-The database contains the following main entities:
+The application uses a PostgreSQL relational database.
+
+The database contains four main tables:
+
+\begin{itemize}
+    \item members
+    \item courses
+    \item registrations
+    \item payments
+\end{itemize}
+
 
 \subsection{Members}
 
-A member represents a person registered in the gym.
+The \texttt{members} table stores the members registered in
+the gym.
 
-The member table contains:
+The table contains:
 
 \begin{itemize}
-    \item ID
-    \item name
-    \item email
+    \item \texttt{id}: primary key
+    \item \texttt{name}: name of the member
+    \item \texttt{email}: email address of the member
 \end{itemize}
+
+The email address is unique. Therefore, two members cannot
+use the same email address.
+
 
 \subsection{Courses}
 
-A course represents a training course offered by the gym.
+The \texttt{courses} table stores the courses offered by the
+gym.
 
-The course table contains:
+The table contains:
 
 \begin{itemize}
-    \item ID
-    \item name
-    \item trainer
-    \item schedule
+    \item \texttt{id}: primary key
+    \item \texttt{name}: name of the course
+    \item \texttt{trainer}: name of the trainer
+    \item \texttt{schedule}: schedule of the course
 \end{itemize}
+
 
 \subsection{Registrations}
 
-A registration connects a member with a course.
+The \texttt{registrations} table connects members with
+courses.
 
-The registration contains:
+The table contains:
 
 \begin{itemize}
-    \item registration ID
-    \item member ID
-    \item course ID
+    \item \texttt{id}: primary key
+    \item \texttt{member\_id}: foreign key referencing
+    \texttt{members.id}
+    \item \texttt{course\_id}: foreign key referencing
+    \texttt{courses.id}
 \end{itemize}
+
+The combination of \texttt{member\_id} and
+\texttt{course\_id} is unique. This prevents the same member
+from being registered more than once for the same course.
+
 
 \subsection{Payments}
 
-A payment stores payment information for a member.
+The \texttt{payments} table stores payment information for
+gym members.
 
-The payment contains:
+The table contains:
 
 \begin{itemize}
-    \item payment ID
-    \item member ID
-    \item amount
-    \item payment date
+    \item \texttt{id}: primary key
+    \item \texttt{member\_id}: foreign key referencing
+    \texttt{members.id}
+    \item \texttt{amount}: payment amount
+    \item \texttt{payment\_date}: date of the payment
 \end{itemize}
+
+Each payment is associated with an existing member through
+the \texttt{member\_id} foreign key.
+
+
+\subsection{Database Relationships}
+
+The database relationships are:
+
+\begin{itemize}
+    \item A member can have multiple payments.
+    \item A member can register for multiple courses.
+    \item A course can contain multiple registered members.
+    \item The \texttt{registrations} table connects members
+    and courses.
+\end{itemize}
+
+The main relational structure can therefore be represented
+as:
+
+\begin{center}
+Members $\longrightarrow$ Registrations $\longleftarrow$ Courses
+\end{center}
+
+\begin{center}
+Members $\longrightarrow$ Payments
+\end{center}
+   
 
 
 % ============================================================
@@ -326,31 +381,59 @@ The installed files are:
 
 \section{Testing}
 
-The project contains automated API tests.
+The project contains automated API tests implemented in
+\texttt{tests/test\_api.py}.
 
-The tests verify:
+The tests verify the main API endpoints and the API key security
+mechanism.
+
+The following read operations are tested:
 
 \begin{itemize}
-    \item GET members
-    \item GET courses
-    \item GET registrations
-    \item GET payments
-    \item POST without API key
-    \item POST with the correct API key
+    \item GET \texttt{/members/}
+    \item GET \texttt{/courses/}
+    \item GET \texttt{/registrations/}
+    \item GET \texttt{/payments/}
 \end{itemize}
 
-The security test verifies that a POST request without an API key
-returns:
+All these endpoints must return:
+
+\begin{lstlisting}
+200 OK
+\end{lstlisting}
+
+The security tests verify that a POST request without an API key
+or with an invalid API key returns:
 
 \begin{lstlisting}
 401 Unauthorized
 \end{lstlisting}
 
-A POST request with the correct API key returns:
+A POST request with the correct API key must return:
 
 \begin{lstlisting}
 200 OK
 \end{lstlisting}
+
+The automated test then performs a complete CRUD test on a
+temporary member:
+
+\begin{enumerate}
+    \item Create a temporary member using POST.
+    \item Read the created member using GET.
+    \item Update the member using PUT.
+    \item Delete the member using DELETE.
+    \item Verify that the deleted member can no longer be found.
+\end{enumerate}
+
+After deletion, requesting the same member must return:
+
+\begin{lstlisting}
+404 Not Found
+\end{lstlisting}
+
+This verifies both the CRUD functionality and the protection of
+write operations using the \texttt{X-API-Key} header.
 
 
 % ============================================================
@@ -378,6 +461,28 @@ Sensitive configuration information is stored in the
 
 The \texttt{.env} file is excluded from the Git repository
 using \texttt{.gitignore}.
+
+
+\subsection{Continuous Integration}
+
+GitHub Actions is used to automatically build the project
+documentation.
+
+The workflow is stored in:
+
+\begin{lstlisting}
+.github/workflows/build.yml
+\end{lstlisting}
+
+For every push to the main branch, the workflow builds the
+LaTeX documentation and verifies that the PDF was generated
+successfully.
+
+The documentation can also be attached automatically to a
+GitHub Release when a version tag is created.
+
+Version \texttt{v1.0} was created as the first release of the
+project.
 
 
 % ============================================================
