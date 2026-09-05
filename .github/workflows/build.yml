@@ -40,8 +40,10 @@ jobs:
           name: documentation
           path: docs/out/documentation.pdf
 
-      - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: docs/out/documentation.pdf
+      - name: Create GitHub Release      
+        if: startsWith(github.ref, 'refs/tags/v')      
+        uses: softprops/action-gh-release@v2      
+        with:      
+          files: |      
+            docs/out/documentation.pdf      
+            docs/proposal.pdf
