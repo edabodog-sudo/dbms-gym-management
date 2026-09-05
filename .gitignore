@@ -22,3 +22,6 @@ venv/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Generated documentation
+docs/out/

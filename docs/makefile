@@ -1,15 +1,17 @@
-PDF=main.pdf
 TEX=main.tex
+OUT=out
+PDF=$(OUT)/documentation.pdf
 
 all: $(PDF)
 
 $(PDF): $(TEX)
-	pdflatex $(TEX)
-	pdflatex $(TEX)
+	mkdir -p $(OUT)
+	pdflatex -output-directory=$(OUT) $(TEX)
+	pdflatex -output-directory=$(OUT) $(TEX)
+	mv $(OUT)/main.pdf $(PDF)
 
 clean:
-	rm -f *.aux *.log *.out *.toc
+	rm -f $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.toc $(OUT)/*.out
 
-distclean: clean
-	rm -f $(PDF)
-
+distclean:
+	rm -rf $(OUT)
