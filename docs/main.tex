@@ -1,0 +1,401 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{
+    \textbf{Gym Management System}\\
+    \large Database Management Systems Project
+}
+
+\author{
+    Eda Bodo Ghislaine\\ 
+    Matrikelnummer: 225786
+}
+\date{Sommersemester 2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+
+\section{Introduction}
+
+The Gym Management System is a database application developed
+for the Database Management Systems course.
+
+The purpose of the application is to manage important information
+related to a gym.
+
+The system supports the management of:
+
+\begin{itemize}
+    \item members,
+    \item courses,
+    \item registrations,
+    \item payments.
+\end{itemize}
+
+The application consists of a PostgreSQL database, a FastAPI
+backend and a web-based frontend.
+
+
+% ============================================================
+% 2. SYSTEM ARCHITECTURE
+% ============================================================
+
+\section{System Architecture}
+
+The application follows a three-layer architecture:
+
+\begin{enumerate}
+    \item Frontend
+    \item Backend
+    \item Database
+\end{enumerate}
+
+The frontend communicates with the backend using HTTP requests.
+
+The backend processes the requests and accesses the PostgreSQL
+database.
+
+The general communication flow is:
+
+\begin{center}
+Frontend $\rightarrow$ FastAPI Backend $\rightarrow$ PostgreSQL
+\end{center}
+
+The backend and the PostgreSQL database are executed using
+Docker Compose.
+
+
+% ============================================================
+% 3. TECHNOLOGIES% ============================================================
+%===============================================================
+\section{Technologies Used}
+
+The following technologies are used in the project:
+
+\begin{itemize}
+    \item PostgreSQL
+    \item FastAPI
+    \item Python
+    \item SQLAlchemy
+    \item Docker
+    \item Docker Compose
+    \item HTML
+    \item CSS
+    \item JavaScript
+    \item Git
+    \item GitHub
+    \item Debian packaging
+\end{itemize}
+
+
+% ============================================================
+% 4. DATABASE
+% ============================================================
+
+\section{Database Design}
+
+The database contains the following main entities:
+
+\subsection{Members}
+
+A member represents a person registered in the gym.
+
+The member table contains:
+
+\begin{itemize}
+    \item ID
+    \item name
+    \item email
+\end{itemize}
+
+\subsection{Courses}
+
+A course represents a training course offered by the gym.
+
+The course table contains:
+
+\begin{itemize}
+    \item ID
+    \item name
+    \item trainer
+    \item schedule
+\end{itemize}
+
+\subsection{Registrations}
+
+A registration connects a member with a course.
+
+The registration contains:
+
+\begin{itemize}
+    \item registration ID
+    \item member ID
+    \item course ID
+\end{itemize}
+
+\subsection{Payments}
+
+A payment stores payment information for a member.
+
+The payment contains:
+
+\begin{itemize}
+    \item payment ID
+    \item member ID
+    \item amount
+    \item payment date
+\end{itemize}
+
+
+% ============================================================
+% 5. BACKEND
+% ============================================================
+
+\section{Backend}
+
+The backend is implemented with FastAPI.
+
+The API provides CRUD operations for the main entities.
+
+CRUD means:
+
+\begin{itemize}
+    \item Create
+    \item Read
+    \item Update
+    \item Delete
+\end{itemize}
+
+The API contains routes for:
+
+\begin{itemize}
+    \item \texttt{/members/}
+    \item \texttt{/courses/}
+    \item \texttt{/registrations/}
+    \item \texttt{/payments/}
+\end{itemize}
+
+
+% ============================================================
+% 6. API SECURITY
+% ============================================================
+
+\section{API Security}
+
+Write operations are protected using an API key.
+
+The HTTP header used by the application is:
+
+\begin{lstlisting}
+X-API-Key
+\end{lstlisting}
+
+The operations POST, PUT and DELETE require the correct API key.
+
+GET operations can be executed without an API key.
+
+If the API key is missing or invalid, the server returns:
+
+\begin{lstlisting}
+401 Unauthorized
+\end{lstlisting}
+
+
+% ============================================================
+% 7. FRONTEND
+% ============================================================
+
+\section{Frontend}
+
+The frontend is implemented using HTML, CSS and JavaScript.
+
+It provides sections for:
+
+\begin{itemize}
+    \item Members
+    \item Courses
+    \item Registrations
+    \item Payments
+\end{itemize}
+
+The frontend communicates with the FastAPI backend using the
+JavaScript \texttt{fetch()} function.
+
+The backend runs on:
+
+\begin{lstlisting}
+http://localhost:8000
+\end{lstlisting}
+
+The frontend development server runs on:
+
+\begin{lstlisting}
+http://localhost:8080
+\end{lstlisting}
+
+
+% ============================================================
+% 8. DOCKER
+% ============================================================
+
+\section{Docker Environment}
+
+Docker Compose is used to start the backend and PostgreSQL
+database.
+
+The main services are:
+
+\begin{itemize}
+    \item \texttt{backend}
+    \item \texttt{db}
+\end{itemize}
+
+The backend communicates with PostgreSQL through Docker's
+internal network.
+
+
+% ============================================================
+% 9. DEBIAN PACKAGE
+% ============================================================
+
+\section{Debian Package}
+
+The frontend can be packaged as a Debian package.
+
+The generated package is called:
+
+\begin{lstlisting}
+gym-management-frontend.deb
+\end{lstlisting}
+
+After installation, the frontend files are stored in:
+
+\begin{lstlisting}
+/usr/share/gym-management/
+\end{lstlisting}
+
+The installed files are:
+
+\begin{itemize}
+    \item \texttt{index.html}
+    \item \texttt{style.css}
+    \item \texttt{app.js}
+\end{itemize}
+
+
+% ============================================================
+% 10. TESTING
+% ============================================================
+
+\section{Testing}
+
+The project contains automated API tests.
+
+The tests verify:
+
+\begin{itemize}
+    \item GET members
+    \item GET courses
+    \item GET registrations
+    \item GET payments
+    \item POST without API key
+    \item POST with the correct API key
+\end{itemize}
+
+The security test verifies that a POST request without an API key
+returns:
+
+\begin{lstlisting}
+401 Unauthorized
+\end{lstlisting}
+
+A POST request with the correct API key returns:
+
+\begin{lstlisting}
+200 OK
+\end{lstlisting}
+
+
+% ============================================================
+% 11. VERSION CONTROL
+% ============================================================
+
+\section{Version Control}
+
+Git is used for version control.
+
+The project is stored in a GitHub repository.
+
+The repository contains the following main directories:
+
+\begin{itemize}
+    \item \texttt{backend/}
+    \item \texttt{frontend/}
+    \item \texttt{packaging/}
+    \item \texttt{tests/}
+    \item \texttt{docs/}
+\end{itemize}
+
+Sensitive configuration information is stored in the
+\texttt{.env} file.
+
+The \texttt{.env} file is excluded from the Git repository
+using \texttt{.gitignore}.
+
+
+% ============================================================
+% 12. CONCLUSION
+% ============================================================
+
+\section{Conclusion}
+
+The Gym Management System demonstrates the interaction between
+a relational database, a REST API and a web frontend.
+
+The application allows the management of members, courses,
+registrations and payments.
+
+Docker simplifies the execution of the backend and database,
+while the API key protects write operations.
+
+The project also includes automated tests, Debian packaging and
+Git version control.
+
+\end{document}

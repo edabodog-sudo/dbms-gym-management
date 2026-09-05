@@ -1,8 +1,24 @@
+# Environment variables
 .env
+
+# Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Python virtual environments
 .venv/
 venv/
+
+# Debian packages
 *.deb
+
+# LaTeX temporary files
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
